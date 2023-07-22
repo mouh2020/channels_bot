@@ -4,11 +4,11 @@ from database import create_db_and_tables
 from handlers.message import message_handler
 from config import admin_chat_id
 from handlers.callback import *
-
+from dependencies.auth import admin_authenticated
 
 @bot.message_handler(func=lambda message:True)
 def all_messages(message : Message) : 
-    if message.from_user.id == admin_chat_id :
+    if admin_authenticated(message.from_user.id) :
         print(message.text)
         message_handler(message=message)
 
